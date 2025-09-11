@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Well Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>The Well Calendar</h1>
+        <p>Book your days at The Well so colleagues know when you'll be there</p>
+    </header>
+
+    <main>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button id="prevMonth" class="nav-btn">&lt;</button>
+                <h2 id="monthYear"></h2>
+                <button id="nextMonth" class="nav-btn">&gt;</button>
+            </div>
+            
+            <div class="calendar-weekdays">
+                <div class="weekday">Sun</div>
+                <div class="weekday">Mon</div>
+                <div class="weekday">Tue</div>
+                <div class="weekday">Wed</div>
+                <div class="weekday">Thu</div>
+                <div class="weekday">Fri</div>
+                <div class="weekday">Sat</div>
+            </div>
+            
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar days will be generated here -->
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color morning"></div>
+                <span>Morning booked</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color afternoon"></div>
+                <span>Afternoon booked</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color full-day"></div>
+                <span>Full day booked</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalDate"></h3>
+            <div class="booking-options">
+                <button class="booking-btn" data-slot="morning">Book Morning</button>
+                <button class="booking-btn" data-slot="afternoon">Book Afternoon</button>
+                <button class="booking-btn" data-slot="full">Book Full Day</button>
+            </div>
+            <div class="current-bookings" id="currentBookings">
+                <!-- Current bookings for selected date will show here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
