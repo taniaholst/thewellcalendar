@@ -13,7 +13,14 @@
 
 body {
     margin: 0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+    font-family:
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        Segoe UI,
+        Roboto,
+        Inter,
+        Arial;
     background: var(--bg);
     color: var(--fg);
 }
@@ -64,7 +71,8 @@ main {
     cursor: pointer;
 }
 
-.calendar-weekdays, .calendar-grid {
+.calendar-weekdays,
+.calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 8px;
@@ -107,7 +115,7 @@ main {
     position: fixed;
     inset: 0;
     display: none;
-    background: rgba(0, 0, 0, .45);
+    background: rgba(0, 0, 0, 0.45);
     padding: 16px;
 }
 
@@ -197,7 +205,6 @@ main {
     border-radius: 10px;
 }
 
-
 /* ——— Badges ——— */
 .badges {
     margin-top: 6px;
@@ -260,4 +267,9 @@ main {
 
 .legend-swatch.fullday {
     background: #6366f1;
+}
+
+.booking-btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

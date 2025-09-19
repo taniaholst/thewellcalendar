@@ -10,18 +10,23 @@ export type DayBookings = {
 type Props = {
     dateKey: string | null
     data: DayBookings | undefined
+    myVoted: { morning?: boolean; afternoon?: boolean; fullday?: boolean } | undefined
     onClose: () => void
-    onBook: (slot: Slot) => void          // +1
-    onDeleteOne: (slot: Slot) => void      // -1
+    onBook: (slot: Slot) => void          // +1 (only if not yet voted by me)
+    onUndo: (slot: Slot) => void          // -1 (only if I previously voted)
 }
 
-export default function BookingModal({ dateKey, data, onClose, onBook, onDeleteOne }: Props) {
+export default function BookingModal({ dateKey, data, myVoted, onClose, onBook, onUndo }: Props) {
     if (!dateKey) return null
     const title = new Date(dateKey + 'T00:00:00').toDateString()
 
     const morningCount = data?.morning ?? 0
     const afternoonCount = data?.afternoon ?? 0
     const fullCount = data?.fullday ?? 0
+
+    const votedMorning = !!myVoted?.morning
+    const votedAfternoon = !!myVoted?.afternoon
+    const votedFull = !!myVoted?.fullday
 
     return (
         <div className="modal open" onClick={(e) => e.target === e.currentTarget && onClose()}>
@@ -34,23 +39,35 @@ export default function BookingModal({ dateKey, data, onClose, onBook, onDeleteO
                     <ul className="current-list">
                         <li>
                             Morning: <strong>{morningCount}</strong>
-                            {morningCount > 0 && <button className="link danger" onClick={() => onDeleteOne('morning')}>-1</button>}
+                            {votedMorning
+                                ? <button className="link danger" onClick={() => onUndo('morning')}>Undo</button>
+                                : null}
                         </li>
                         <li>
                             Afternoon: <strong>{afternoonCount}</strong>
-                            {afternoonCount > 0 && <button className="link danger" onClick={() => onDeleteOne('afternoon')}>-1</button>}
+                            {votedAfternoon
+                                ? <button className="link danger" onClick={() => onUndo('afternoon')}>Undo</button>
+                                : null}
                         </li>
                         <li>
                             Full day: <strong>{fullCount}</strong>
-                            {fullCount > 0 && <button className="link danger" onClick={() => onDeleteOne('fullday')}>-1</button>}
+                            {votedFull
+                                ? <button className="link danger" onClick={() => onUndo('fullday')}>Undo</button>
+                                : null}
                         </li>
                     </ul>
                 </div>
 
                 <div className="booking-options">
-                    <button className="booking-btn" onClick={() => onBook('morning')}>+1 Morning</button>
-                    <button className="booking-btn" onClick={() => onBook('afternoon')}>+1 Afternoon</button>
-                    <button className="booking-btn" onClick={() => onBook('fullday')}>+1 Full day</button>
+                    <button className="booking-btn" disabled={votedMorning} onClick={() => onBook('morning')}>
+                        {votedMorning ? 'Voted' : '+1 Morning'}
+                    </button>
+                    <button className="booking-btn" disabled={votedAfternoon} onClick={() => onBook('afternoon')}>
+                        {votedAfternoon ? 'Voted' : '+1 Afternoon'}
+                    </button>
+                    <button className="booking-btn" disabled={votedFull} onClick={() => onBook('fullday')}>
+                        {votedFull ? 'Voted' : '+1 Full day'}
+                    </button>
                 </div>
             </div>
         </div>
